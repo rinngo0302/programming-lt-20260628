@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+staged_cs_files=$(git diff --cached --name-only --diff-filter=ACMR -- '*.cs')
+
+if [ -z "$staged_cs_files" ]; then
+  exit 0
+fi
+
+echo "CSharpier: staged な .cs ファイルを整形しています..."
+echo "$staged_cs_files" | xargs dotnet csharpier format
+
+# 整形によって変更されたファイルを再度ステージに追加
+echo "$staged_cs_files" | xargs git add
+
+exit 0
