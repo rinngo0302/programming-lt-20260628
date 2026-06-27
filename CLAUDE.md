@@ -17,7 +17,14 @@ dotnet tool restore
 
 # ブランチ運用
 
-個人開発・Claude主体の作業のため、`main` への直接コミットを許容する(PR必須化はしない)。チケット単位で作業を切り出したい場合のみ `feature/xxx` / `fix/xxx` を任意で使う。
+実装フェーズ(機能実装以降)は **Issue駆動 + PR必須** で進める。
+
+- 実装する作業はまず GitHub Issue を作成する(`.github/ISSUE_TEMPLATE/default.yml` を使用)
+- Issueごとに `main` から `feature/xxx` または `fix/xxx` ブランチを切る
+- 作業が完了したら PR を作成し、`main` にマージする(`main` への直接コミットは行わない)
+- PRの本文には対応するIssueを `Closes #N` のように紐づける
+
+ドキュメント整備など実装フェーズ以前の作業は、これまでの運用(直接コミット)のままで構わない。
 
 # コミットメッセージ
 
