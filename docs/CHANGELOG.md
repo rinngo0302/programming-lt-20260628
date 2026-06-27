@@ -40,3 +40,7 @@
 - [PR #67](https://github.com/rinngo0302/programming-lt-20260628/pull/67) feat(input): ステアリング/加速/ブレーキのActionを定義する([#18](https://github.com/rinngo0302/programming-lt-20260628/issues/18))
   - Player マップの `Move`(Vector2) を廃止し、`Steer`(Axis, A/D・←→の1DAxis合成)・`Accelerate`(Button, W/↑)・`Brake`(Button, S/↓) を新規定義。キーボード操作のみに限定
   - 作業中、Unity MCPサーバーとの接続がセッション内で切れる事象が発生(Claude起動→Unity Editor起動の順序が原因。Unity起動後にClaude側を再起動して復旧)
+- [PR #68](https://github.com/rinngo0302/programming-lt-20260628/pull/68) docs: CHANGELOGにPR #66/#67を追記、Unity MCP起動順序の注意点を記載
+- [PR #69](https://github.com/rinngo0302/programming-lt-20260628/pull/69) fix: タイトルシーンのCanvas RenderModeがWorldSpaceになっていた不具合を修正
+  - ユーザーからの指摘(「カメラがないのでは」)を起点に発見。`Unity_ManageGameObject`でCanvas追加時、標準メニュー経由と異なり`renderMode`が`WorldSpace`になっていた(#13から潜在)
+  - 副次的に、タイトルテキストの折り返し崩れとスタートボタンの文字色不具合(白背景に白文字)もスクリーンショット確認で発見・修正
