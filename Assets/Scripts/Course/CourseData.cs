@@ -34,4 +34,9 @@ public class CourseData : ScriptableObject
     {
         _checkpoints = checkpoints;
     }
+
+    public void SetItemBoxPositions(Vector3[] itemBoxPositions)
+    {
+        _itemBoxPositions = itemBoxPositions;
+    }
 }
