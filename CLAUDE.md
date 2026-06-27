@@ -17,12 +17,19 @@ dotnet tool restore
 
 # ブランチ運用
 
-実装フェーズ(機能実装以降)は **Issue駆動 + PR必須** で進める。
+実装フェーズ(機能実装以降)は **Issue駆動 + PR必須** で進める。1つのIssue(リーフIssue)に対して以下の手順を1サイクルとして繰り返す。
 
-- 実装する作業はまず GitHub Issue を作成する(`.github/ISSUE_TEMPLATE/default.yml` を使用)
-- Issueごとに `main` から `feature/xxx` または `fix/xxx` ブランチを切る
-- 作業が完了したら PR を作成し、`main` にマージする(`main` への直接コミットは行わない)
-- PRの本文には対応するIssueを `Closes #N` のように紐づける
+1. 対応するIssueを確認する(`docs/spec/`配下の仕様書も参照する)
+2. `main` から `feature/xxx` または `fix/xxx` ブランチを作成する
+3. 実装する(「実装完了時のチェック」セクションのチェックを通す)
+4. `/code-review` スキルでセルフレビューを行い、指摘があれば修正する
+5. `/pr-summary` スキルでPR本文を生成する(生成された本文をそのまま使う)
+6. `gh pr create` でPRを作成する(対応するIssueを `Closes #N` で紐づける)
+7. PRをマージし、`main`に取り込む
+8. 次のIssueに進む
+
+- `main` への直接コミットは行わない
+- 1つのリーフIssue = 1PRを基本単位とする(大きくなりすぎる場合はIssueを分割する)
 
 ドキュメント整備など実装フェーズ以前の作業は、これまでの運用(直接コミット)のままで構わない。
 
