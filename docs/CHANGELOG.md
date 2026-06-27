@@ -51,3 +51,8 @@
 - [PR #72](https://github.com/rinngo0302/programming-lt-20260628/pull/72) docs: CHANGELOGにPR #70/#71を追記、scope#3完了を記録
 - [PR #73](https://github.com/rinngo0302/programming-lt-20260628/pull/73) feat(course): CourseDataのScriptableObjectを定義する([#20](https://github.com/rinngo0302/programming-lt-20260628/issues/20))
   - チェックポイント・ウェイポイント・アイテムボックス位置(Vector3[])とラップ数を保持するシンプルなデータコンテナを実装
+- [PR #74](https://github.com/rinngo0302/programming-lt-20260628/pull/74) docs: CHANGELOGにPR #72/#73を追記
+- [PR #75](https://github.com/rinngo0302/programming-lt-20260628/pull/75) feat(course): チェックポイントトリガーを実装する([#21](https://github.com/rinngo0302/programming-lt-20260628/issues/21))
+  - `Checkpoint`(順番付き、トリガー+R3 Observableで通過通知)と、シーン配置をCourseDataへ同期する`CourseDefinition`を実装
+  - Play modeで実際にトリガー通過を確認
+- [PR #76](https://github.com/rinngo0302/programming-lt-20260628/pull/76) chore: `.idea/`をgitignoreに追加
