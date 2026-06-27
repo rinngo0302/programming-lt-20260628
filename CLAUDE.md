@@ -135,19 +135,19 @@ float _moveSpeed = 5f;
 
 - コルーチンと `async/await` を混在させない。コルーチンに統一する。
 - イベント・値の監視には R3 を使用する(`UnityEvent` との混在禁止)。購読は必ずライフサイクル管理を行う(`AddTo(this)`)。
-- Presenterへのバインドは Bindings struct を介して渡す。struct はただのデータ入れ物で、Model側の `CreateBindings()` で生成する。Presenterは MonoBehaviour の参照を直接持たない。
+- Presenterへのバインドは `Xxx Output` struct を介して渡す。struct はただのデータ入れ物(Observable/ReadOnlyReactivePropertyを公開する口をまとめたもの)で、Model側の `CreateOutput()` で生成する。Presenterは MonoBehaviour の参照を直接持たない。Presenter側はその struct を引数に取る `Bind()` メソッドで各Observableを `Subscribe()` する。
 
 ```csharp
-public struct ScoreBindings
+public struct ScoreOutput
 {
     public ReadOnlyReactiveProperty<int> RedScore { get; init; }
 }
 
-public ScoreBindings CreateBindings() => new ScoreBindings { RedScore = _redScore };
+public ScoreOutput CreateOutput() => new ScoreOutput { RedScore = _redScore };
 
-public void Bind(ScoreBindings b)
+public void Bind(ScoreOutput output)
 {
-    b.RedScore.Subscribe(UpdateRedScoreUI).AddTo(this);
+    output.RedScore.Subscribe(UpdateRedScoreUI).AddTo(this);
 }
 ```
 
