@@ -29,4 +29,9 @@ public class CourseData : ScriptableObject
     public Vector3[] Checkpoints => _checkpoints;
     public Vector3[] Waypoints => _waypoints;
     public Vector3[] ItemBoxPositions => _itemBoxPositions;
+
+    public void SetCheckpoints(Vector3[] checkpoints)
+    {
+        _checkpoints = checkpoints;
+    }
 }
