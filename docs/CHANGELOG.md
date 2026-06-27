@@ -60,3 +60,7 @@
 - [PR #78](https://github.com/rinngo0302/programming-lt-20260628/pull/78) feat(course): テストコースをブロックアウトで作成する([#22](https://github.com/rinngo0302/programming-lt-20260628/issues/22))
   - 外周壁(60×40)＋内側の島(30×16)の矩形リング状コースをGameシーンに作成。チェックポイント4箇所(東/北/西/南=ゴール)を配置し、`TestCourseData`へIndex順に同期
   - スクリーンショットで実際の見た目を確認([docs/screenshots/test-course.png](screenshots/test-course.png))
+- [PR #79](https://github.com/rinngo0302/programming-lt-20260628/pull/79) docs: CHANGELOGにPR #77/#78を追記
+- [PR #80](https://github.com/rinngo0302/programming-lt-20260628/pull/80) feat(course): アイテムボックス配置を仮置きする([#23](https://github.com/rinngo0302/programming-lt-20260628/issues/23))
+  - `ItemBoxMarker`をテストコースに3箇所配置し、`TestCourseData`へ同期(Checkpointと同じパターンを踏襲)
+  - scope親 [#4 course](https://github.com/rinngo0302/programming-lt-20260628/issues/4) のリーフ4件(#20〜#23)がすべて完了したためクローズ
