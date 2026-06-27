@@ -166,8 +166,9 @@ public void Bind(ScoreBindings b)
 1. リンター/フォーマッターチェック: `dotnet csharpier check .` でフォーマット崩れがないか確認(崩れていれば `dotnet csharpier format .` で整形)
 2. ビルドチェック: Unity_ManageEditor などのMCPツールでコンパイルエラー・警告が無いことを確認する(Unity_GetConsoleLogs の errorCount/warningCount が 0 であること)
 3. テスト: 実装内容にロジックが含まれる場合は対応するテストを書き、Unity Test Runner で green になることを確認する
+4. 見た目の確認: シーン・UIなど視覚的な変更を行った場合、コンパイルが通るだけで完了とせず、`Unity_Camera_Capture` 等のMCPツールで実際の見た目をスクリーンショット確認する(Canvasのレンダリングモードによってはシーンにカメラが必要。Screen Space - Overlayはカメラ不要だが`Unity_Camera_Capture`では撮影できないため、確認したい場合はCanvasのrenderModeを一時的にScreen Space - Cameraにするなどで対応する)。コードレビューだけでは検出できない不具合(文字色と背景色が同化して視認できない等)はこの確認で見つかる
 
-すべて問題なければコミットする。
+すべて問題なければコミットする。PRには可能な範囲でスクリーンショットを含める(`docs/screenshots/`配下に保存しPR本文にMarkdown画像として埋め込む)。
 
 # テスト
 

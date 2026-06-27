@@ -21,3 +21,8 @@
 - [PR #57](https://github.com/rinngo0302/programming-lt-20260628/pull/57) docs: CHANGELOGを新設し、これまでの進捗を記録する
 - [PR #58](https://github.com/rinngo0302/programming-lt-20260628/pull/58) feat(scene): ゲームシーンの土台を作成する([#14](https://github.com/rinngo0302/programming-lt-20260628/issues/14))
   - 発見: `Title.unity`(#13で作成)がBuild Settingsに未登録だったため、同PRでまとめて登録
+- [PR #59](https://github.com/rinngo0302/programming-lt-20260628/pull/59) docs: CHANGELOGにPR #57/#58を追記
+- [PR #60](https://github.com/rinngo0302/programming-lt-20260628/pull/60) feat(scene): リザルトシーンを作成する([#15](https://github.com/rinngo0302/programming-lt-20260628/issues/15))
+  - 実装時、Unity_Camera_Captureで実際の見た目をスクリーンショット確認する運用を開始(CLAUDE.mdにも以後の方針として記録予定)
+  - 発見: ボタンの子テキストが白背景に白文字で視認できない不具合をスクリーンショット確認で発見・修正(コードレビューだけでは検出できない見た目の不具合)
+  - `Result.unity` をBuild Settingsに登録
