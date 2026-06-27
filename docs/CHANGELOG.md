@@ -75,3 +75,8 @@
 - [PR #84](https://github.com/rinngo0302/programming-lt-20260628/pull/84) feat(kart): KartControllerを実装する([#25](https://github.com/rinngo0302/programming-lt-20260628/issues/25))
   - KartModelをAwakeで生成し、UpdateでTick()を呼んでTransformに反映する薄いMonoBehaviour
   - 発見: ヘッドレスでMCP経由操作している環境ではPlay mode中のUnity EditorのUpdateループが実時間で進行しない(フォーカス/再描画が無いと進まない既知の挙動)。KartModelのロジック自体は時間進行に依存しない手動Tick実行で別途検証した
+- [PR #85](https://github.com/rinngo0302/programming-lt-20260628/pull/85) docs: CHANGELOGにPR #83/#84、asmdef問題・Editor実時間問題を記録
+- [PR #86](https://github.com/rinngo0302/programming-lt-20260628/pull/86) feat(kart): プレイヤー入力アダプタを実装する([#26](https://github.com/rinngo0302/programming-lt-20260628/issues/26))
+  - PlayerInputAdapterを実装。Input System Actions(Steer/Accelerate/Brake)をKartControllerへ渡す
+  - リフレクションでAwake()を実行し、Action解決・初期状態(入力なし時に0/false)を確認
+  - scope親 [#5 kart](https://github.com/rinngo0302/programming-lt-20260628/issues/5) は#27(asmdef問題で保留中)が残っているため未クローズ
