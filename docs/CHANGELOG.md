@@ -44,3 +44,7 @@
 - [PR #69](https://github.com/rinngo0302/programming-lt-20260628/pull/69) fix: タイトルシーンのCanvas RenderModeがWorldSpaceになっていた不具合を修正
   - ユーザーからの指摘(「カメラがないのでは」)を起点に発見。`Unity_ManageGameObject`でCanvas追加時、標準メニュー経由と異なり`renderMode`が`WorldSpace`になっていた(#13から潜在)
   - 副次的に、タイトルテキストの折り返し崩れとスタートボタンの文字色不具合(白背景に白文字)もスクリーンショット確認で発見・修正
+- [PR #70](https://github.com/rinngo0302/programming-lt-20260628/pull/70) docs: CHANGELOGにPR #68/#69を追記
+- [PR #71](https://github.com/rinngo0302/programming-lt-20260628/pull/71) feat(input): アイテム使用のActionを定義する([#19](https://github.com/rinngo0302/programming-lt-20260628/issues/19))
+  - `UseItem`(Button, Space)を定義。未使用だった`Jump`をSpaceキーから付け替えて再利用し、キーボード専用に統一
+  - scope親 [#3 input](https://github.com/rinngo0302/programming-lt-20260628/issues/3) のリーフ3件(#17〜#19)がすべて完了したためクローズ
