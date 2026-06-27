@@ -133,6 +133,10 @@ float _moveSpeed = 5f;
 
 パラメータは `[SerializeField]` で公開し、`public` フィールドは原則使わない。`[Header]` / `[Tooltip]` を付けて非エンジニアが扱いやすくする。
 
+### Canvas作成時の注意
+
+Unity MCPツール(`Unity_ManageGameObject` の `components_to_add`)でCanvasを追加すると、標準の「GameObject > UI > Canvas」メニュー経由と異なり `renderMode` が `WorldSpace` になる場合がある(Titleシーンで実際に発生した不具合)。Canvas作成後は `renderMode` が意図した値(通常は `ScreenSpaceOverlay`)になっているか必ず確認する。
+
 ### 非同期処理・イベント
 
 - コルーチンと `async/await` を混在させない。コルーチンに統一する。
