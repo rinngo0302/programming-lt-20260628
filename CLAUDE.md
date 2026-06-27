@@ -15,20 +15,126 @@ dotnet tool restore
 - 手動で整形する場合: `dotnet csharpier format .`
 - 整形だけ確認する場合: `dotnet csharpier check .`
 
+# ブランチ運用
+
+個人開発・Claude主体の作業のため、`main` への直接コミットを許容する(PR必須化はしない)。チケット単位で作業を切り出したい場合のみ `feature/xxx` / `fix/xxx` を任意で使う。
+
 # コミットメッセージ
 
-プレフィックス + コロン + 日本語の要約。本文で背景や理由を補足する。
+```
+プレフィックス: 変更内容の要約(50字以内)
 
-- `feat:` 新機能実装
-- `fix:` バグ修正
-- `refactor:` リファクタリング(仕様には影響のない変更)
-- `chore:` 雑用(ツールのインストールや単純なファイルの置き換えなど)
-- `docs:` ドキュメントのみの変更(README、CLAUDE.md など)
-- `style:` 動作に影響しないコードスタイルの変更(フォーマット適用など。`refactor`との違いはロジックを一切変えていないこと)
-- `test:` テストの追加・修正
-- `perf:` パフォーマンス改善
+必要に応じて詳細を記述(本文は72字以内で折り返し)
+```
 
-1コミット1関心事を徹底し、フォーマット適用(`style`)と実装(`feat`/`fix`)は分けてコミットする。
+- 言語: 日本語
+- 単位: 1コミット = 1論理変更。複数の関心事を1コミットに混ぜない(フォーマット適用の`style`と実装の`feat`/`fix`は必ず分ける)
+
+| プレフィックス | 用途 |
+|---|---|
+| `feat:` | 新機能実装 |
+| `fix:` | バグ修正 |
+| `refactor:` | リファクタリング(仕様には影響のない変更) |
+| `chore:` | 雑用(ツールのインストールや単純なファイルの置き換えなど) |
+| `docs:` | ドキュメントのみの変更(README、CLAUDE.md など) |
+| `style:` | 動作に影響しないコードスタイルの変更(フォーマット適用など。`refactor`との違いはロジックを一切変えていないこと) |
+| `test:` | テストの追加・修正 |
+| `perf:` | パフォーマンス改善 |
+
+良い例:
+```
+feat: プレイヤーのジャンプ処理を実装
+fix: ダメージ計算でゼロ除算が発生する問題を修正
+```
+
+悪い例: `update` / `fix bug` / `WIP` / `変更`
+
+# 命名規則
+
+| 対象 | スタイル | 例 |
+|---|---|---|
+| クラス・構造体 | PascalCase | `PlayerController` |
+| メソッド | PascalCase | `TakeDamage()` |
+| インターフェース | `I` + PascalCase | `IDamageable` |
+| public / protected フィールド | camelCase | `moveSpeed` |
+| private フィールド | `_` + camelCase | `_currentHp` |
+| ローカル変数・引数 | camelCase | `deltaTime` |
+
+`.editorconfig` で private フィールドの `_camelCase` は自動チェックされる(suggestion)。
+
+# C# スタイル
+
+- namespace は必須にしない(プロジェクト名がスペース入りで使いづらいため省略可。グローバルスコープでよい)。
+- 波括弧は常に改行して開く(`csharp_new_line_before_open_brace = all`、CSharpierが自動整形)。
+- `using` は `System` 系を先頭に置く。
+- フィールド・プロパティ・メソッドへの `this.` 修飾は不要(`.editorconfig`で抑制)。
+
+# Unity固有のルール
+
+### MonoBehaviour ライフサイクル
+
+| メソッド | 役割 |
+|---|---|
+| `Awake` | コンポーネントの参照取得・初期化(他オブジェクトへの依存なし) |
+| `Start` | 他コンポーネントへの依存がある初期化 |
+| `Update` | フレームごとの軽量な処理のみ。重い処理・GC Allocを発生させる処理は書かない |
+
+### コンポーネント参照のキャッシュ
+
+`GetComponent` / `FindObjectOfType` は `Awake` / `Start` でキャッシュし、`Update`内で毎フレーム呼び出さない。
+
+```csharp
+// NG
+void Update() { GetComponent<Rigidbody>().AddForce(...); }
+
+// OK
+Rigidbody _rb;
+void Awake() { _rb = GetComponent<Rigidbody>(); }
+void Update() { _rb.AddForce(...); }
+```
+
+### null チェック
+
+- 通常の C# オブジェクト → `is null` を使う(パフォーマンス)
+- `UnityEngine.Object` のライフサイクル確認(Destroy済み判定) → `== null` を使う
+
+### SerializeField・インスペクター公開
+
+```csharp
+[Header("移動設定")]
+[SerializeField, Tooltip("移動速度 (m/s)")]
+float _moveSpeed = 5f;
+```
+
+パラメータは `[SerializeField]` で公開し、`public` フィールドは原則使わない。`[Header]` / `[Tooltip]` を付けて非エンジニアが扱いやすくする。
+
+### 非同期処理・イベント
+
+- コルーチンと `async/await` を混在させない。コルーチンに統一する。
+- イベント・値の監視には R3 を使用する(`UnityEvent` との混在禁止)。購読は必ずライフサイクル管理を行う(`AddTo(this)`)。
+- Presenterへのバインドは Bindings struct を介して渡す。struct はただのデータ入れ物で、Model側の `CreateBindings()` で生成する。Presenterは MonoBehaviour の参照を直接持たない。
+
+```csharp
+public struct ScoreBindings
+{
+    public ReadOnlyReactiveProperty<int> RedScore { get; init; }
+}
+
+public ScoreBindings CreateBindings() => new ScoreBindings { RedScore = _redScore };
+
+public void Bind(ScoreBindings b)
+{
+    b.RedScore.Subscribe(UpdateRedScoreUI).AddTo(this);
+}
+```
+
+# アーキテクチャ方針
+
+- SOLID原則: 単一責任・開放閉鎖・依存性逆転を意識する。
+- DRY原則: 重複ロジックはユーティリティや基底クラスに切り出す。
+- UI: MVP(Model-View-Presenter)パターンを基本とする。
+- ゲームデータ: `ScriptableObject` を積極的に活用する。
+- YAGNI: 現時点で必要な機能のみ実装する。将来の拡張を見越した過剰な抽象化はしない。
 
 # 実装完了時のチェック
 
@@ -45,10 +151,22 @@ dotnet tool restore
 - フレームワーク: Unity Test Framework (`com.unity.test-framework`, NUnitベース)
 - EditMode用テストアセンブリ: [Assets/Tests/EditMode/EditModeTests.asmdef](Assets/Tests/EditMode/EditModeTests.asmdef)
   - 実機/Play不要なロジック(純粋なC#クラス・メソッド)のユニットテストはここに置く
-  - サンプル: [Assets/Tests/EditMode/SampleTests.cs](Assets/Tests/EditMode/SampleTests.cs)
 - PlayModeテスト(MonoBehaviour・コルーチン等、実行時挙動の検証)が必要になったら `Assets/Tests/PlayMode/PlayModeTests.asmdef` を同様の形式で追加する(現時点では未作成)
 - 実行方法: Unity Editor の `Window > General > Test Runner` から実行、または `EditMode`/`PlayMode` タブで対象を選択
-- 新しいロジックを実装したら、原則対応するテストを `Assets/Tests/EditMode` (または `PlayMode`) に追加する
+
+## 何をテストするか
+
+- **ビジネスロジックを優先する**。スコア計算・状態遷移・当たり判定の結果・ダメージ計算など、入力に対して出力/状態が一意に決まる純粋なロジックがテスト対象の中心。
+- MonoBehaviourの薄いラッパー(他コンポーネントへの委譲だけ、UI表示の更新だけ)やUnity自体の挙動はテストしない。ロジックは `Model` / 純粋なC#クラスに分離してテスト容易性を確保する(MVPのModel層に置く)。
+- DOTweenのアニメーション完了タイミングなど、Unityランタイムに強く依存する見た目の検証は対象外。
+
+## テストの書き方
+
+- **仕様(振る舞い)をテストする。実装の詳細をテストしない。** private なフィールド・メソッドや内部の実装手順を直接アサートしない。公開API(public メソッド・プロパティ・公開されたイベント/Observable)への入力と、その結果として観測できる出力・状態変化だけを検証する。
+- 判断基準: 「内部実装(アルゴリズム、ループの書き方、ヘルパーメソッドの分割など)を変えてもテストが落ちない」「仕様(入出力の対応関係)を変えるとテストが落ちる」状態になっていること。後者が成立しない・前者で落ちるテストは実装をなぞっているだけなので書き直す。
+- 1テスト1振る舞い。テスト名は `対象_条件_期待結果` のように仕様が読める名前にする(例: `TakeDamage_HpがArmorを下回る攻撃_HpはArmor分のみ減少する`)。
+- Arrange-Act-Assert で構成し、Assertは可能な限り1つの観測可能な結果に絞る。
+- 境界値・異常系(0、負数、null、上限超えなど)を仕様として明記されている範囲でカバーする。仕様にない振る舞いを推測してテストしない。
 
 # パッケージ構成 (Packages/manifest.json)
 
