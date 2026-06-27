@@ -26,3 +26,8 @@
   - 実装時、Unity_Camera_Captureで実際の見た目をスクリーンショット確認する運用を開始(CLAUDE.mdにも以後の方針として記録予定)
   - 発見: ボタンの子テキストが白背景に白文字で視認できない不具合をスクリーンショット確認で発見・修正(コードレビューだけでは検出できない見た目の不具合)
   - `Result.unity` をBuild Settingsに登録
+- [PR #61](https://github.com/rinngo0302/programming-lt-20260628/pull/61) docs: 実装完了時のチェックにスクリーンショット確認を追加
+- [PR #62](https://github.com/rinngo0302/programming-lt-20260628/pull/62) feat(scene): シーン遷移ロジックを実装する([#16](https://github.com/rinngo0302/programming-lt-20260628/issues/16))
+  - `SceneLoader`(SceneManager.LoadSceneの薄いラッパー) + `TitleScenePresenter`/`ResultScenePresenter`でボタンを接続
+  - Play modeでボタンクリックをシミュレートし、3パターンの遷移を実機相当で確認
+  - scope親 [#2 シーン](https://github.com/rinngo0302/programming-lt-20260628/issues/2) のリーフ4件(#13〜#16)がすべて完了したためクローズ
