@@ -80,3 +80,9 @@
   - PlayerInputAdapterを実装。Input System Actions(Steer/Accelerate/Brake)をKartControllerへ渡す
   - リフレクションでAwake()を実行し、Action解決・初期状態(入力なし時に0/false)を確認
   - scope親 [#5 kart](https://github.com/rinngo0302/programming-lt-20260628/issues/5) は#27(asmdef問題で保留中)が残っているため未クローズ
+- [PR #87](https://github.com/rinngo0302/programming-lt-20260628/pull/87) docs: CHANGELOGにPR #85/#86を追記
+- [PR #88](https://github.com/rinngo0302/programming-lt-20260628/pull/88) feat(camera): 追従カメラコンポーネントを実装する([#28](https://github.com/rinngo0302/programming-lt-20260628/issues/28), [#29](https://github.com/rinngo0302/programming-lt-20260628/issues/29))
+  - FollowCameraを実装。後方・上方からLerp/Slerpで緩やかに追従する三人称カメラ
+  - 距離・高さ・補間速度を最初からSerializeFieldで公開し、#29の要件も同時に満たした(別実装は行わず1PRにまとめた)
+  - Edit modeでTime.deltaTimeが0であることを再確認し、固定dtでLerp/Slerpの式自体を検証する方式で動作確認した
+  - scope親 [#6 camera](https://github.com/rinngo0302/programming-lt-20260628/issues/6) のリーフ2件(#28, #29)がすべて完了したためクローズ
