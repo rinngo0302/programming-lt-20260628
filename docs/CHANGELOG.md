@@ -56,3 +56,7 @@
   - `Checkpoint`(順番付き、トリガー+R3 Observableで通過通知)と、シーン配置をCourseDataへ同期する`CourseDefinition`を実装
   - Play modeで実際にトリガー通過を確認
 - [PR #76](https://github.com/rinngo0302/programming-lt-20260628/pull/76) chore: `.idea/`をgitignoreに追加
+- [PR #77](https://github.com/rinngo0302/programming-lt-20260628/pull/77) docs: CHANGELOGにPR #74/#75/#76を追記
+- [PR #78](https://github.com/rinngo0302/programming-lt-20260628/pull/78) feat(course): テストコースをブロックアウトで作成する([#22](https://github.com/rinngo0302/programming-lt-20260628/issues/22))
+  - 外周壁(60×40)＋内側の島(30×16)の矩形リング状コースをGameシーンに作成。チェックポイント4箇所(東/北/西/南=ゴール)を配置し、`TestCourseData`へIndex順に同期
+  - スクリーンショットで実際の見た目を確認([docs/screenshots/test-course.png](screenshots/test-course.png))
