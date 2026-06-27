@@ -48,3 +48,6 @@
 - [PR #71](https://github.com/rinngo0302/programming-lt-20260628/pull/71) feat(input): アイテム使用のActionを定義する([#19](https://github.com/rinngo0302/programming-lt-20260628/issues/19))
   - `UseItem`(Button, Space)を定義。未使用だった`Jump`をSpaceキーから付け替えて再利用し、キーボード専用に統一
   - scope親 [#3 input](https://github.com/rinngo0302/programming-lt-20260628/issues/3) のリーフ3件(#17〜#19)がすべて完了したためクローズ
+- [PR #72](https://github.com/rinngo0302/programming-lt-20260628/pull/72) docs: CHANGELOGにPR #70/#71を追記、scope#3完了を記録
+- [PR #73](https://github.com/rinngo0302/programming-lt-20260628/pull/73) feat(course): CourseDataのScriptableObjectを定義する([#20](https://github.com/rinngo0302/programming-lt-20260628/issues/20))
+  - チェックポイント・ウェイポイント・アイテムボックス位置(Vector3[])とラップ数を保持するシンプルなデータコンテナを実装
