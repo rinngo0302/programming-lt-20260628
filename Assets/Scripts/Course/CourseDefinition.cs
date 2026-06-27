@@ -16,4 +16,14 @@ public class CourseDefinition : MonoBehaviour
 
         _courseData.SetCheckpoints(positions);
     }
+
+    [ContextMenu("Sync Item Box Positions To CourseData")]
+    public void SyncItemBoxPositionsToCourseData()
+    {
+        Vector3[] positions = GetComponentsInChildren<ItemBoxMarker>()
+            .Select(marker => marker.transform.position)
+            .ToArray();
+
+        _courseData.SetItemBoxPositions(positions);
+    }
 }
