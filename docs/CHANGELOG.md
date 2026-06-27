@@ -64,3 +64,7 @@
 - [PR #80](https://github.com/rinngo0302/programming-lt-20260628/pull/80) feat(course): アイテムボックス配置を仮置きする([#23](https://github.com/rinngo0302/programming-lt-20260628/issues/23))
   - `ItemBoxMarker`をテストコースに3箇所配置し、`TestCourseData`へ同期(Checkpointと同じパターンを踏襲)
   - scope親 [#4 course](https://github.com/rinngo0302/programming-lt-20260628/issues/4) のリーフ4件(#20〜#23)がすべて完了したためクローズ
+- [PR #81](https://github.com/rinngo0302/programming-lt-20260628/pull/81) docs: CHANGELOGにPR #79/#80を追記、scope#4完了を記録
+- [PR #82](https://github.com/rinngo0302/programming-lt-20260628/pull/82) feat(kart): KartModelを実装する([#24](https://github.com/rinngo0302/programming-lt-20260628/issues/24))
+  - 速度・最高速度・加速度・ブレーキ減速度・旋回速度をパラメータ化した純粋なC#クラス。ドリフトなし
+  - MonoBehaviour非依存のためテストは専用Issue(#27)で実施する方針
