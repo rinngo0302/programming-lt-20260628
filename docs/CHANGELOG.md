@@ -31,3 +31,8 @@
   - `SceneLoader`(SceneManager.LoadSceneの薄いラッパー) + `TitleScenePresenter`/`ResultScenePresenter`でボタンを接続
   - Play modeでボタンクリックをシミュレートし、3パターンの遷移を実機相当で確認
   - scope親 [#2 シーン](https://github.com/rinngo0302/programming-lt-20260628/issues/2) のリーフ4件(#13〜#16)がすべて完了したためクローズ
+- [PR #63](https://github.com/rinngo0302/programming-lt-20260628/pull/63) docs: CHANGELOGにPR #61/#62を追記
+- MVPのBindings structをOutput命名に変更([PR #64](https://github.com/rinngo0302/programming-lt-20260628/pull/64))
+  - struct名: `XxxBindings` → `XxxOutput`、生成メソッド名: `CreateBindings()` → `CreateOutput()`(Presenterの`Bind()`はそのまま)
+- [PR #65](https://github.com/rinngo0302/programming-lt-20260628/pull/65) chore(input): 不要なInput Actionsを削除する([#17](https://github.com/rinngo0302/programming-lt-20260628/issues/17))
+  - Player マップから Attack/Interact/Crouch/Previous/Next を削除。Move/Look/Sprint/Jump(#18で再定義予定)とUIマップは維持
