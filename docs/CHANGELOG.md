@@ -36,3 +36,7 @@
   - struct名: `XxxBindings` → `XxxOutput`、生成メソッド名: `CreateBindings()` → `CreateOutput()`(Presenterの`Bind()`はそのまま)
 - [PR #65](https://github.com/rinngo0302/programming-lt-20260628/pull/65) chore(input): 不要なInput Actionsを削除する([#17](https://github.com/rinngo0302/programming-lt-20260628/issues/17))
   - Player マップから Attack/Interact/Crouch/Previous/Next を削除。Move/Look/Sprint/Jump(#18で再定義予定)とUIマップは維持
+- [PR #66](https://github.com/rinngo0302/programming-lt-20260628/pull/66) docs: CHANGELOGにPR #63/#64/#65を追記
+- [PR #67](https://github.com/rinngo0302/programming-lt-20260628/pull/67) feat(input): ステアリング/加速/ブレーキのActionを定義する([#18](https://github.com/rinngo0302/programming-lt-20260628/issues/18))
+  - Player マップの `Move`(Vector2) を廃止し、`Steer`(Axis, A/D・←→の1DAxis合成)・`Accelerate`(Button, W/↑)・`Brake`(Button, S/↓) を新規定義。キーボード操作のみに限定
+  - 作業中、Unity MCPサーバーとの接続がセッション内で切れる事象が発生(Claude起動→Unity Editor起動の順序が原因。Unity起動後にClaude側を再起動して復旧)

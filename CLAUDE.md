@@ -17,6 +17,8 @@ dotnet tool restore
 
 これでコミット時に staged な `.cs` ファイルが CSharpier で自動整形される(pre-commitフック)。
 
+Unity MCP(Unity_ManageEditor等)を使う場合は **Unity Editorを先に起動してからClaude Codeを起動する** こと。逆順だとMCP接続に失敗し、そのセッション中は再接続されない(Unity Editorを後から起動してもツールが復活しない)。繋がらない場合はClaude Codeセッションを再起動する。
+
 # コードスタイル
 
 - フォーマッターは CSharpier ([.editorconfig](.editorconfig) / [.csharpierignore](.csharpierignore))
