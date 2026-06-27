@@ -68,3 +68,10 @@
 - [PR #82](https://github.com/rinngo0302/programming-lt-20260628/pull/82) feat(kart): KartModelを実装する([#24](https://github.com/rinngo0302/programming-lt-20260628/issues/24))
   - 速度・最高速度・加速度・ブレーキ減速度・旋回速度をパラメータ化した純粋なC#クラス。ドリフトなし
   - MonoBehaviour非依存のためテストは専用Issue(#27)で実施する方針
+- [PR #83](https://github.com/rinngo0302/programming-lt-20260628/pull/83) docs: CHANGELOGにPR #81/#82を追記
+- 発見: EditModeTests(別asmdef)からAssembly-CSharp(asmdef無しのデフォルトアセンブリ)上のクラスを参照できない問題が判明
+  - Unityのコンパイル順序の制約上、asmdef側からAssembly-CSharpを参照することは不可能
+  - #27(KartModelのユニットテスト)は一旦保留し、asmdef構成の見直しは別途対応する方針とした
+- [PR #84](https://github.com/rinngo0302/programming-lt-20260628/pull/84) feat(kart): KartControllerを実装する([#25](https://github.com/rinngo0302/programming-lt-20260628/issues/25))
+  - KartModelをAwakeで生成し、UpdateでTick()を呼んでTransformに反映する薄いMonoBehaviour
+  - 発見: ヘッドレスでMCP経由操作している環境ではPlay mode中のUnity EditorのUpdateループが実時間で進行しない(フォーカス/再描画が無いと進まない既知の挙動)。KartModelのロジック自体は時間進行に依存しない手動Tick実行で別途検証した
