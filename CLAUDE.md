@@ -36,8 +36,19 @@ dotnet tool restore
 
 1. リンター/フォーマッターチェック: `dotnet csharpier check .` でフォーマット崩れがないか確認(崩れていれば `dotnet csharpier format .` で整形)
 2. ビルドチェック: Unity_ManageEditor などのMCPツールでコンパイルエラー・警告が無いことを確認する(Unity_GetConsoleLogs の errorCount/warningCount が 0 であること)
+3. テスト: 実装内容にロジックが含まれる場合は対応するテストを書き、Unity Test Runner で green になることを確認する
 
-どちらも問題なければコミットする。
+すべて問題なければコミットする。
+
+# テスト
+
+- フレームワーク: Unity Test Framework (`com.unity.test-framework`, NUnitベース)
+- EditMode用テストアセンブリ: [Assets/Tests/EditMode/EditModeTests.asmdef](Assets/Tests/EditMode/EditModeTests.asmdef)
+  - 実機/Play不要なロジック(純粋なC#クラス・メソッド)のユニットテストはここに置く
+  - サンプル: [Assets/Tests/EditMode/SampleTests.cs](Assets/Tests/EditMode/SampleTests.cs)
+- PlayModeテスト(MonoBehaviour・コルーチン等、実行時挙動の検証)が必要になったら `Assets/Tests/PlayMode/PlayModeTests.asmdef` を同様の形式で追加する(現時点では未作成)
+- 実行方法: Unity Editor の `Window > General > Test Runner` から実行、または `EditMode`/`PlayMode` タブで対象を選択
+- 新しいロジックを実装したら、原則対応するテストを `Assets/Tests/EditMode` (または `PlayMode`) に追加する
 
 # パッケージ構成 (Packages/manifest.json)
 
