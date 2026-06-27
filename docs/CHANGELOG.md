@@ -18,3 +18,6 @@
 - [PR #55](https://github.com/rinngo0302/programming-lt-20260628/pull/55) chore: Git LFS用フックを追加
 - [PR #56](https://github.com/rinngo0302/programming-lt-20260628/pull/56) fix: `.githooks/`配下の全フックに実行権限を付与
   - 発見: `pre-commit`(CSharpier整形)を含む全フックが実行権限なし(644)でコミットされており、クローン環境で機能しない不具合があった
+- [PR #57](https://github.com/rinngo0302/programming-lt-20260628/pull/57) docs: CHANGELOGを新設し、これまでの進捗を記録する
+- [PR #58](https://github.com/rinngo0302/programming-lt-20260628/pull/58) feat(scene): ゲームシーンの土台を作成する([#14](https://github.com/rinngo0302/programming-lt-20260628/issues/14))
+  - 発見: `Title.unity`(#13で作成)がBuild Settingsに未登録だったため、同PRでまとめて登録
