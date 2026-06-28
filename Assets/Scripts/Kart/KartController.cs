@@ -20,6 +20,7 @@ public class KartController : MonoBehaviour
     public float Steer { get; set; }
     public bool Accelerate { get; set; }
     public bool Brake { get; set; }
+    public ItemHolder ItemHolder { get; } = new();
 
     void Awake()
     {
