@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using R3;
+using UnityEngine;
 
 public sealed class RaceModel
 {
@@ -83,5 +85,69 @@ public sealed class RaceModel
         {
             racer.SetLap(racer.Lap.CurrentValue + 1);
         }
+    }
+
+    // 順位の優先順位: 1.ゴール済み(早い順) 2.ラップ数 3.直近チェックポイント番号
+    // 4.次チェックポイントまでの距離(近い方が上位)。docs/spec/02-race-rules.md参照。
+    public void RecalculateRanks(Vector3[] racerPositions, Vector3[] checkpointPositions)
+    {
+        int racerCount = _racers.Length;
+        int[] order = new int[racerCount];
+        for (int i = 0; i < racerCount; i++)
+        {
+            order[i] = i;
+        }
+
+        Array.Sort(order, (a, b) => CompareRacers(a, b, racerPositions, checkpointPositions));
+
+        for (int i = 0; i < racerCount; i++)
+        {
+            _racers[order[i]].SetRank(i + 1);
+        }
+    }
+
+    int CompareRacers(int a, int b, Vector3[] racerPositions, Vector3[] checkpointPositions)
+    {
+        RacerState racerA = _racers[a];
+        RacerState racerB = _racers[b];
+
+        if (racerA.HasFinished != racerB.HasFinished)
+        {
+            return racerA.HasFinished ? -1 : 1;
+        }
+
+        if (racerA.HasFinished)
+        {
+            return racerA.FinishOrder.CompareTo(racerB.FinishOrder);
+        }
+
+        int lapCompare = racerB.Lap.CurrentValue.CompareTo(racerA.Lap.CurrentValue);
+        if (lapCompare != 0)
+        {
+            return lapCompare;
+        }
+
+        int checkpointCompare = racerB.LastPassedCheckpointIndex.CurrentValue.CompareTo(
+            racerA.LastPassedCheckpointIndex.CurrentValue
+        );
+        if (checkpointCompare != 0)
+        {
+            return checkpointCompare;
+        }
+
+        float distanceA = DistanceToNextCheckpoint(racerA, racerPositions[a], checkpointPositions);
+        float distanceB = DistanceToNextCheckpoint(racerB, racerPositions[b], checkpointPositions);
+        return distanceA.CompareTo(distanceB);
+    }
+
+    float DistanceToNextCheckpoint(
+        RacerState racer,
+        Vector3 racerPosition,
+        Vector3[] checkpointPositions
+    )
+    {
+        int nextCheckpointIndex =
+            (racer.LastPassedCheckpointIndex.CurrentValue + 1) % checkpointPositions.Length;
+        return Vector3.Distance(racerPosition, checkpointPositions[nextCheckpointIndex]);
     }
 }
