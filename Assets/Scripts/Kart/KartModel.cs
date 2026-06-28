@@ -1,3 +1,4 @@
+using R3;
 using UnityEngine;
 
 public sealed class KartModel
@@ -6,10 +7,13 @@ public sealed class KartModel
     readonly float _acceleration;
     readonly float _brakeDeceleration;
     readonly float _turnSpeedDegreesPerSecond;
+    readonly ReactiveProperty<bool> _isStunned = new(false);
+    float _stunTimer;
 
     public float Speed { get; private set; }
     public float Heading { get; private set; }
     public Vector3 Position { get; private set; }
+    public ReadOnlyReactiveProperty<bool> IsStunned => _isStunned;
 
     public KartModel(
         float maxSpeed,
@@ -28,8 +32,26 @@ public sealed class KartModel
         Heading = initialHeading;
     }
 
+    // スタン中は速度を0付近まで落として操作不能にする(docs/spec/05-items.md)。
+    public void ApplyStun(float duration)
+    {
+        _isStunned.Value = true;
+        _stunTimer = duration;
+        Speed = 0f;
+    }
+
     public void Tick(float steer, bool accelerate, bool brake, float deltaTime)
     {
+        if (_isStunned.CurrentValue)
+        {
+            _stunTimer -= deltaTime;
+            if (_stunTimer <= 0f)
+            {
+                _isStunned.Value = false;
+            }
+            return;
+        }
+
         if (accelerate)
         {
             Speed = Mathf.Min(Speed + _acceleration * deltaTime, _maxSpeed);
