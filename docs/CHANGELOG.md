@@ -144,3 +144,12 @@
   - KartControllerにInputEnabledプロパティを追加し、カウントダウン終了まで操作を無効化(#5と連携)
   - 発見: PR #112でAssets/Scripts/Ui.metaのコミット漏れがあったため本PRで合わせて修正
   - scope親 [#10 HUD](https://github.com/rinngo0302/programming-lt-20260628/issues/10) のリーフ3件(#47, #48, #49)がすべて完了したためクローズ
+- [PR #116](https://github.com/rinngo0302/programming-lt-20260628/pull/116) docs: CHANGELOGにPR #113/#114/#115を追記、scope#10(HUD)完了を記録
+- [PR #117](https://github.com/rinngo0302/programming-lt-20260628/pull/117) feat(ui): シーン間の最終順位データ受け渡しを実装する([#50](https://github.com/rinngo0302/programming-lt-20260628/issues/50))
+  - RaceResultDataを実装。SceneManager.LoadSceneはドメインリロードを伴わないため静的フィールドで受け渡し(SceneLoaderと同様のパターン)
+- [PR #118](https://github.com/rinngo0302/programming-lt-20260628/pull/118) feat(ui): リザルト画面の順位表UIを実装する([#51](https://github.com/rinngo0302/programming-lt-20260628/issues/51))
+  - ResultRankingPresenterを実装。1〜4位の順位表を表示、プレイヤー行を強調表示
+  - RaceResultData.RacerResultにIsPlayerフラグを追加(#50の拡張)
+  - 発見: 手動生成したTMP要素+手動Camera.Renderの組み合わせがヘッドレス環境で描画に反映されない現象が発生。テキスト/色プロパティの値自体はログで確認済み
+  - #52(リザルト画面の遷移ボタン)は過去のシーン土台構築(#2)時点で既に実装済みと判明したため、追加実装なしでクローズ
+  - scope親 [#12 リザルト画面UI](https://github.com/rinngo0302/programming-lt-20260628/issues/12)、scope親 [#46 UI実装](https://github.com/rinngo0302/programming-lt-20260628/issues/46) のリーフがすべて完了したためクローズ
