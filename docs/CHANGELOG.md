@@ -118,3 +118,8 @@
 - [PR #104](https://github.com/rinngo0302/programming-lt-20260628/pull/104) feat(item): みどり甲羅の効果を実装する([#38](https://github.com/rinngo0302/programming-lt-20260628/issues/38))
   - GreenShellProjectileを実装。前方直進・壁で反射しない・発射者以外への命中でスタン付与
   - KartController.UseItem()とPlayerInputAdapterのUseItemアクション配線を追加し、#37のキノコ効果も実際に使用できるよう統合(専用Issueがないため本PRで対応)
+- [PR #105](https://github.com/rinngo0302/programming-lt-20260628/pull/105) docs: CHANGELOGにPR #102/#104を追記
+- [PR #106](https://github.com/rinngo0302/programming-lt-20260628/pull/106) feat(item): バナナの効果を実装する([#39](https://github.com/rinngo0302/programming-lt-20260628/issues/39))
+  - BananaTrapを実装。使用者の後方に設置、設置者以外が踏むとスタン付与、一定時間で自然消滅
+  - KartController.UseItem()のBananaケースを配線
+  - scope親 [#8 item](https://github.com/rinngo0302/programming-lt-20260628/issues/8) は#41(asmdef問題で保留中、#27/#34と同様の理由)が残っているため未クローズ
