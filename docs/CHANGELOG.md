@@ -136,3 +136,11 @@
 - [PR #112](https://github.com/rinngo0302/programming-lt-20260628/pull/112) feat(ui): 順位/ラップ表示Presenterを実装する([#11](https://github.com/rinngo0302/programming-lt-20260628/issues/11), [#47](https://github.com/rinngo0302/programming-lt-20260628/issues/47))
   - RaceHudPresenterを実装。RaceModel.RacerOutputを介して順位・ラップ数(現在/総数)を表示(MVP+R3パターン)。Game.unityにHudCanvas(RankText/LapText)を恒久的に配置
   - #11(タイトル画面UI)は過去のシーン土台構築(#2)時点で既に実装済みと判明したため、追加実装なしでクローズ
+- [PR #113](https://github.com/rinngo0302/programming-lt-20260628/pull/113) docs: CHANGELOGにPR #111/#112を追記
+- [PR #114](https://github.com/rinngo0302/programming-lt-20260628/pull/114) feat(ui): 所持アイテム表示Presenterを実装する([#48](https://github.com/rinngo0302/programming-lt-20260628/issues/48))
+  - ItemDisplayPresenterを実装。ItemHolder.HeldItemを介して所持アイテムを表示。Game.unityにItemText(HudCanvas配下)を恒久配置
+- [PR #115](https://github.com/rinngo0302/programming-lt-20260628/pull/115) feat(ui): レース開始カウントダウンを実装する([#49](https://github.com/rinngo0302/programming-lt-20260628/issues/49))
+  - CountdownModel/CountdownPresenterを実装。3,2,1,GO!を1秒間隔で表示
+  - KartControllerにInputEnabledプロパティを追加し、カウントダウン終了まで操作を無効化(#5と連携)
+  - 発見: PR #112でAssets/Scripts/Ui.metaのコミット漏れがあったため本PRで合わせて修正
+  - scope親 [#10 HUD](https://github.com/rinngo0302/programming-lt-20260628/issues/10) のリーフ3件(#47, #48, #49)がすべて完了したためクローズ
