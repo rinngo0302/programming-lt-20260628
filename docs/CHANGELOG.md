@@ -132,3 +132,7 @@
 - [PR #110](https://github.com/rinngo0302/programming-lt-20260628/pull/110) feat(cpu): アイテムランダム使用ロジックを実装する([#44](https://github.com/rinngo0302/programming-lt-20260628/issues/44))
   - CpuInputAdapterにItemHolder.HeldItemの変化を購読し、取得後0.5〜2秒のランダム遅延後にUseItem()を呼ぶ処理を追加
   - scope親 [#9 cpu](https://github.com/rinngo0302/programming-lt-20260628/issues/9) は#45(asmdef問題で保留中、#27/#34/#41と同様の理由)が残っているため未クローズ
+- [PR #111](https://github.com/rinngo0302/programming-lt-20260628/pull/111) docs: CHANGELOGにPR #107/#108/#109/#110を追記
+- [PR #112](https://github.com/rinngo0302/programming-lt-20260628/pull/112) feat(ui): 順位/ラップ表示Presenterを実装する([#11](https://github.com/rinngo0302/programming-lt-20260628/issues/11), [#47](https://github.com/rinngo0302/programming-lt-20260628/issues/47))
+  - RaceHudPresenterを実装。RaceModel.RacerOutputを介して順位・ラップ数(現在/総数)を表示(MVP+R3パターン)。Game.unityにHudCanvas(RankText/LapText)を恒久的に配置
+  - #11(タイトル画面UI)は過去のシーン土台構築(#2)時点で既に実装済みと判明したため、追加実装なしでクローズ
