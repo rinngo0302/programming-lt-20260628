@@ -146,7 +146,7 @@ Unity MCPツール(`Unity_ManageGameObject` の `components_to_add`)でCanvasを
 ```csharp
 public struct ScoreOutput
 {
-    public ReadOnlyReactiveProperty<int> RedScore { get; init; }
+    public ReadOnlyReactiveProperty<int> RedScore { get; set; }
 }
 
 public ScoreOutput CreateOutput() => new ScoreOutput { RedScore = _redScore };
