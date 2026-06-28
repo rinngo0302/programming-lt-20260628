@@ -100,3 +100,9 @@
   - プレイヤーが指定ラップ数に到達してゴールラインを通過した時点でRaceEndedイベントを発火
   - IsRaceEndedフラグでNotifyCheckpointPassed/RecalculateRanksをガードし、未ゴールCPUの順位をその時点の暫定値で確定させる
   - scope親 [#7 race](https://github.com/rinngo0302/programming-lt-20260628/issues/7) は#34(asmdef問題で保留中、#27と同様の理由)が残っているため未クローズ
+- [PR #95](https://github.com/rinngo0302/programming-lt-20260628/pull/95) docs: CHANGELOGにPR #92/#93/#94を追記
+- [PR #96](https://github.com/rinngo0302/programming-lt-20260628/pull/96) feat(item): ItemDataのScriptableObjectを定義する([#35](https://github.com/rinngo0302/programming-lt-20260628/issues/35))
+  - ItemType enum(Mushroom/GreenShell/Banana)とItemData ScriptableObjectを定義。MushroomData/GreenShellData/BananaDataの3アセットを作成
+- [PR #97](https://github.com/rinngo0302/programming-lt-20260628/pull/97) feat(item): スタン状態を実装する([#40](https://github.com/rinngo0302/programming-lt-20260628/issues/40))
+  - KartModel.ApplyStun(duration)を実装。適用直後に速度0・操作不能にし、IsStunnedをR3のReactivePropertyで公開
+  - #37(キノコ)/#38(甲羅)/#39(バナナ)より先にスタン基盤を実装(両Issueがこれに依存するため)
