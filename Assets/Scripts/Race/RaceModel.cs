@@ -43,10 +43,16 @@ public sealed class RaceModel
 
     readonly RacerState[] _racers;
     readonly int _checkpointCount;
+    readonly int _lapsToWin;
+    readonly int _playerRacerIndex;
+    readonly Subject<Unit> _raceEnded = new();
+    int _nextFinishOrder;
 
-    public RaceModel(int racerCount, int checkpointCount)
+    public RaceModel(int racerCount, int checkpointCount, int lapsToWin, int playerRacerIndex)
     {
         _checkpointCount = checkpointCount;
+        _lapsToWin = lapsToWin;
+        _playerRacerIndex = playerRacerIndex;
         _racers = new RacerState[racerCount];
         for (int i = 0; i < racerCount; i++)
         {
@@ -55,6 +61,8 @@ public sealed class RaceModel
     }
 
     public IReadOnlyList<RacerState> Racers => _racers;
+    public Observable<Unit> RaceEnded => _raceEnded;
+    public bool IsRaceEnded { get; private set; }
 
     public RacerOutput CreateRacerOutput(int racerIndex)
     {
@@ -68,8 +76,14 @@ public sealed class RaceModel
     }
 
     // ショートカットによる不正なラップ加算を防ぐため、通過済み番号+1以外は無視する。
+    // プレイヤーゴール後は仕様上レース終了のため、以降の通過は反映しない。
     public void NotifyCheckpointPassed(int racerIndex, int checkpointIndex)
     {
+        if (IsRaceEnded)
+        {
+            return;
+        }
+
         RacerState racer = _racers[racerIndex];
         int expectedNextCheckpointIndex =
             (racer.LastPassedCheckpointIndex.CurrentValue + 1) % _checkpointCount;
@@ -81,16 +95,36 @@ public sealed class RaceModel
         racer.SetLastPassedCheckpointIndex(checkpointIndex);
 
         bool isFinishLine = checkpointIndex == _checkpointCount - 1;
-        if (isFinishLine)
+        if (!isFinishLine)
         {
-            racer.SetLap(racer.Lap.CurrentValue + 1);
+            return;
+        }
+
+        racer.SetLap(racer.Lap.CurrentValue + 1);
+
+        if (!racer.HasFinished && racer.Lap.CurrentValue >= _lapsToWin)
+        {
+            racer.HasFinished = true;
+            racer.FinishOrder = _nextFinishOrder++;
+
+            if (racerIndex == _playerRacerIndex)
+            {
+                IsRaceEnded = true;
+                _raceEnded.OnNext(Unit.Default);
+            }
         }
     }
 
     // 順位の優先順位: 1.ゴール済み(早い順) 2.ラップ数 3.直近チェックポイント番号
     // 4.次チェックポイントまでの距離(近い方が上位)。docs/spec/02-race-rules.md参照。
+    // レース終了後は未ゴールレーサーの順位もその時点で確定させるため再計算しない。
     public void RecalculateRanks(Vector3[] racerPositions, Vector3[] checkpointPositions)
     {
+        if (IsRaceEnded)
+        {
+            return;
+        }
+
         int racerCount = _racers.Length;
         int[] order = new int[racerCount];
         for (int i = 0; i < racerCount; i++)
