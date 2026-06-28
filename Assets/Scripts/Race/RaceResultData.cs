@@ -6,11 +6,13 @@ public static class RaceResultData
     {
         public string Name;
         public int Rank;
+        public bool IsPlayer;
 
-        public RacerResult(string name, int rank)
+        public RacerResult(string name, int rank, bool isPlayer)
         {
             Name = name;
             Rank = rank;
+            IsPlayer = isPlayer;
         }
     }
 
