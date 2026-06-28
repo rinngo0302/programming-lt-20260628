@@ -106,3 +106,11 @@
 - [PR #97](https://github.com/rinngo0302/programming-lt-20260628/pull/97) feat(item): スタン状態を実装する([#40](https://github.com/rinngo0302/programming-lt-20260628/issues/40))
   - KartModel.ApplyStun(duration)を実装。適用直後に速度0・操作不能にし、IsStunnedをR3のReactivePropertyで公開
   - #37(キノコ)/#38(甲羅)/#39(バナナ)より先にスタン基盤を実装(両Issueがこれに依存するため)
+- [PR #98](https://github.com/rinngo0302/programming-lt-20260628/pull/98) docs: CHANGELOGにPR #95/#96/#97を追記
+- [PR #99](https://github.com/rinngo0302/programming-lt-20260628/pull/99) feat(item): キノコの効果を実装する([#37](https://github.com/rinngo0302/programming-lt-20260628/issues/37))
+  - KartModel.ApplyBoost(duration, speedMultiplier)を実装。使用直後に通常最高速度を超える速度へ即座に上昇し、指定時間後は通常クランプに戻る
+- [PR #100](https://github.com/rinngo0302/programming-lt-20260628/pull/100) docs: Output structサンプルのinitをsetに修正
+  - PR #90で発見した`init`アクセサのコンパイルエラー問題をCLAUDE.mdのサンプルコードに反映(別セッションのspawn_taskで対応)
+- [PR #101](https://github.com/rinngo0302/programming-lt-20260628/pull/101) feat(item): アイテムボックスを実装する([#36](https://github.com/rinngo0302/programming-lt-20260628/issues/36))
+  - ItemHolderで所持アイテムを1つまでに制限。ItemBoxでトリガー進入時のランダム抽選・取得後の一定時間再出現(コルーチン)を実装
+  - KartControllerにItemHolderプロパティを追加
