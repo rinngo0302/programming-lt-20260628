@@ -86,3 +86,10 @@
   - 距離・高さ・補間速度を最初からSerializeFieldで公開し、#29の要件も同時に満たした(別実装は行わず1PRにまとめた)
   - Edit modeでTime.deltaTimeが0であることを再確認し、固定dtでLerp/Slerpの式自体を検証する方式で動作確認した
   - scope親 [#6 camera](https://github.com/rinngo0302/programming-lt-20260628/issues/6) のリーフ2件(#28, #29)がすべて完了したためクローズ
+- [PR #89](https://github.com/rinngo0302/programming-lt-20260628/pull/89) docs: CHANGELOGにPR #87/#88を追記、scope#6完了を記録
+- [PR #90](https://github.com/rinngo0302/programming-lt-20260628/pull/90) feat(race): RaceModelを実装する([#30](https://github.com/rinngo0302/programming-lt-20260628/issues/30))
+  - 各レーサーのラップ数・直近通過チェックポイント番号・順位をR3のReactivePropertyで保持し、ReadOnlyReactivePropertyとして公開するRaceModelを実装
+  - 発見: PR #88でAssets/Scripts/Camera.meta(フォルダ自体の.meta)のコミットが漏れていたため本PRで合わせて修正
+  - 発見: CLAUDE.mdのOutput structサンプルが使う`init`アクセサは、このUnity環境では`IsExternalInit`未定義でコンパイルエラーになるため`set`に変更した(別タスクでCLAUDE.md修正を予定)
+- [PR #91](https://github.com/rinngo0302/programming-lt-20260628/pull/91) feat(race): チェックポイント通過判定を実装する([#31](https://github.com/rinngo0302/programming-lt-20260628/issues/31))
+  - RaceModel.NotifyCheckpointPassedを実装。通過済み番号+1のみ有効とし、ショートカットによる不正なラップ加算を防ぐ。最終チェックポイント通過でラップ+1
