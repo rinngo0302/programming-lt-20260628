@@ -40,9 +40,11 @@ public sealed class RaceModel
     }
 
     readonly RacerState[] _racers;
+    readonly int _checkpointCount;
 
-    public RaceModel(int racerCount)
+    public RaceModel(int racerCount, int checkpointCount)
     {
+        _checkpointCount = checkpointCount;
         _racers = new RacerState[racerCount];
         for (int i = 0; i < racerCount; i++)
         {
@@ -61,5 +63,25 @@ public sealed class RaceModel
             LastPassedCheckpointIndex = racer.LastPassedCheckpointIndex,
             Rank = racer.Rank,
         };
+    }
+
+    // ショートカットによる不正なラップ加算を防ぐため、通過済み番号+1以外は無視する。
+    public void NotifyCheckpointPassed(int racerIndex, int checkpointIndex)
+    {
+        RacerState racer = _racers[racerIndex];
+        int expectedNextCheckpointIndex =
+            (racer.LastPassedCheckpointIndex.CurrentValue + 1) % _checkpointCount;
+        if (checkpointIndex != expectedNextCheckpointIndex)
+        {
+            return;
+        }
+
+        racer.SetLastPassedCheckpointIndex(checkpointIndex);
+
+        bool isFinishLine = checkpointIndex == _checkpointCount - 1;
+        if (isFinishLine)
+        {
+            racer.SetLap(racer.Lap.CurrentValue + 1);
+        }
     }
 }
