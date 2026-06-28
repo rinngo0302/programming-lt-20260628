@@ -1,6 +1,10 @@
 using R3;
 using UnityEngine;
 
+// Rigidbodyが無いと、Collider同士が両方Rigidbody無しの場合はOnTriggerEnterが発火しない
+// (チェックポイント/アイテムボックス/甲羅・バナナの命中判定に必要)。移動はTransformで直接
+// 行うためkinematicにする。
+[RequireComponent(typeof(Rigidbody))]
 public class KartController : MonoBehaviour
 {
     [Header("カート性能")]
@@ -34,6 +38,10 @@ public class KartController : MonoBehaviour
 
     void Awake()
     {
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rigidbody.isKinematic = true;
+        rigidbody.useGravity = false;
+
         _model = new KartModel(
             _maxSpeed,
             _acceleration,
