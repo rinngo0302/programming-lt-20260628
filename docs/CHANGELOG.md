@@ -153,3 +153,11 @@
   - 発見: 手動生成したTMP要素+手動Camera.Renderの組み合わせがヘッドレス環境で描画に反映されない現象が発生。テキスト/色プロパティの値自体はログで確認済み
   - #52(リザルト画面の遷移ボタン)は過去のシーン土台構築(#2)時点で既に実装済みと判明したため、追加実装なしでクローズ
   - scope親 [#12 リザルト画面UI](https://github.com/rinngo0302/programming-lt-20260628/issues/12)、scope親 [#46 UI実装](https://github.com/rinngo0302/programming-lt-20260628/issues/46) のリーフがすべて完了したためクローズ
+- [PR #119](https://github.com/rinngo0302/programming-lt-20260628/pull/119) docs: CHANGELOGにPR #116/#117/#118を追記、scope#12/#46完了を記録
+- [PR #120](https://github.com/rinngo0302/programming-lt-20260628/pull/120) feat(scene): ゲームシーンを実際にプレイ可能な状態に統合する
+  - 発見: ユーザーから「実際にプレイできるか」と指摘を受け確認した結果、Game.unityにはコース地形とHUD表示枠のみが存在し、プレイヤー/CPUカート・カメラ・レース進行を司る上位コントローラーが一切配置されていないことが判明
+  - これまでの各PRは個別ロジックの検証に留まり、実際にシーンへ組み込む統合作業を行っていなかったため
+  - GameSceneControllerを新規実装し、RaceModel生成・チェックポイント通過検知・毎フレーム順位再計算・HUD各PresenterのBind呼び出し・レース終了時のリザルト遷移を担わせた
+  - Game.unityにPlayerKart/CpuKart1-3/Main Camera(FollowCamera)/CountdownText/CountdownPresenterを配置
+  - ItemBox_0/1/2をItemBoxMarker(プレースホルダー)から実際のItemBoxコンポーネントに置き換え、_itemPoolを配線
+  - 注意: ヘッドレス環境でのPlay mode実時間進行の制約により、実際のレース進行(完走できるか)はユーザー側での実機確認が必要
