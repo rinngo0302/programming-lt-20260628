@@ -18,7 +18,11 @@ MonoBehaviour:
   - {x: 0, y: 2, z: 14}
   - {x: -22.5, y: 2, z: 0}
   - {x: 0, y: 2, z: -14}
-  _waypoints: []
+  _waypoints:
+  - {x: 22.5, y: 2, z: 0}
+  - {x: 0, y: 2, z: 14}
+  - {x: -22.5, y: 2, z: 0}
+  - {x: 0, y: 2, z: -14}
   _itemBoxPositions:
   - {x: 22.5, y: 1, z: 8}
   - {x: -22.5, y: 1, z: -8}
