@@ -20,6 +20,9 @@ public class KartController : MonoBehaviour
     [SerializeField, Tooltip("みどり甲羅の弾プレハブ")]
     GameObject _greenShellPrefab;
 
+    [SerializeField, Tooltip("バナナの設置トラッププレハブ")]
+    GameObject _bananaPrefab;
+
     KartModel _model;
 
     public float Steer { get; set; }
@@ -69,7 +72,7 @@ public class KartController : MonoBehaviour
                 FireGreenShell(item);
                 break;
             case ItemType.Banana:
-                // バナナの設置トラップは#39で実装する。
+                PlaceBanana(item);
                 break;
         }
     }
@@ -87,5 +90,20 @@ public class KartController : MonoBehaviour
             transform.rotation
         );
         projectileGo.GetComponent<GreenShellProjectile>().Launch(this, item);
+    }
+
+    void PlaceBanana(ItemData item)
+    {
+        if (_bananaPrefab == null)
+        {
+            return;
+        }
+
+        GameObject bananaGo = Instantiate(
+            _bananaPrefab,
+            transform.position - transform.forward,
+            Quaternion.identity
+        );
+        bananaGo.GetComponent<BananaTrap>().Place(this, item);
     }
 }
