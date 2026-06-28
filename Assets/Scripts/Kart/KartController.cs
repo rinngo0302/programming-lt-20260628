@@ -28,6 +28,7 @@ public class KartController : MonoBehaviour
     public float Steer { get; set; }
     public bool Accelerate { get; set; }
     public bool Brake { get; set; }
+    public bool InputEnabled { get; set; } = true;
     public ItemHolder ItemHolder { get; } = new();
     public ReadOnlyReactiveProperty<bool> IsStunned => _model.IsStunned;
 
@@ -43,9 +44,18 @@ public class KartController : MonoBehaviour
         );
     }
 
+    // カウントダウン中など操作を受け付けない間は、入力値を無視して停止状態を保つ(docs/spec/01-scenes.md)。
     void Update()
     {
-        _model.Tick(Steer, Accelerate, Brake, Time.deltaTime);
+        if (InputEnabled)
+        {
+            _model.Tick(Steer, Accelerate, Brake, Time.deltaTime);
+        }
+        else
+        {
+            _model.Tick(0f, false, false, Time.deltaTime);
+        }
+
         transform.position = _model.Position;
         transform.rotation = Quaternion.Euler(0f, _model.Heading, 0f);
     }
