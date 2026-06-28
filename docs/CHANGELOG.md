@@ -161,3 +161,10 @@
   - Game.unityにPlayerKart/CpuKart1-3/Main Camera(FollowCamera)/CountdownText/CountdownPresenterを配置
   - ItemBox_0/1/2をItemBoxMarker(プレースホルダー)から実際のItemBoxコンポーネントに置き換え、_itemPoolを配線
   - 注意: ヘッドレス環境でのPlay mode実時間進行の制約により、実際のレース進行(完走できるか)はユーザー側での実機確認が必要
+- [PR #121](https://github.com/rinngo0302/programming-lt-20260628/pull/121) docs: CHANGELOGにPR #119/#120を追記、ゲームシーン統合の経緯を記録
+- [PR #122](https://github.com/rinngo0302/programming-lt-20260628/pull/122) fix(kart): カートにRigidbodyが無く当たり判定が機能していない問題を修正する
+  - 発見: ユーザーから「当たり判定できてなくね？」と指摘を受け確認した結果、KartControllerにRigidbodyが一切付いていないことが判明
+  - Unity仕様上、2つのCollider両方にRigidbodyが無い場合はOnTriggerEnterが発火しないため、チェックポイント・アイテムボックス・甲羅・バナナの判定がすべて機能していなかった
+  - KartControllerに[RequireComponent(typeof(Rigidbody))]を追加し、Awakeでkinematic化(isKinematic=true, useGravity=false)。Game.unityの既存4台のカートにも手動でRigidbodyを追加
+  - 発見: 検証作業中にCPUカート3台が重力で沈んでいたことが判明し、Y座標を1に修正
+  - 注意: ヘッドレスEditor環境の制約により、Physics.Simulate()によるOnTriggerEnter実発火の最終確認はできていない。修正自体はUnity公式仕様に基づくため、実機での確認を推奨
