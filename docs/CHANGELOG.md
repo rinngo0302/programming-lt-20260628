@@ -114,3 +114,7 @@
 - [PR #101](https://github.com/rinngo0302/programming-lt-20260628/pull/101) feat(item): アイテムボックスを実装する([#36](https://github.com/rinngo0302/programming-lt-20260628/issues/36))
   - ItemHolderで所持アイテムを1つまでに制限。ItemBoxでトリガー進入時のランダム抽選・取得後の一定時間再出現(コルーチン)を実装
   - KartControllerにItemHolderプロパティを追加
+- [PR #102](https://github.com/rinngo0302/programming-lt-20260628/pull/102) docs: CHANGELOGにPR #98/#99/#100/#101を追記
+- [PR #104](https://github.com/rinngo0302/programming-lt-20260628/pull/104) feat(item): みどり甲羅の効果を実装する([#38](https://github.com/rinngo0302/programming-lt-20260628/issues/38))
+  - GreenShellProjectileを実装。前方直進・壁で反射しない・発射者以外への命中でスタン付与
+  - KartController.UseItem()とPlayerInputAdapterのUseItemアクション配線を追加し、#37のキノコ効果も実際に使用できるよう統合(専用Issueがないため本PRで対応)
