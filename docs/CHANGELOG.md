@@ -168,3 +168,10 @@
   - KartControllerに[RequireComponent(typeof(Rigidbody))]を追加し、Awakeでkinematic化(isKinematic=true, useGravity=false)。Game.unityの既存4台のカートにも手動でRigidbodyを追加
   - 発見: 検証作業中にCPUカート3台が重力で沈んでいたことが判明し、Y座標を1に修正
   - 注意: ヘッドレスEditor環境の制約により、Physics.Simulate()によるOnTriggerEnter実発火の最終確認はできていない。修正自体はUnity公式仕様に基づくため、実機での確認を推奨
+- [PR #123](https://github.com/rinngo0302/programming-lt-20260628/pull/123) docs: CHANGELOGにPR #121/#122を追記、当たり判定バグ修正の経緯を記録
+- [PR #124](https://github.com/rinngo0302/programming-lt-20260628/pull/124) feat(scene): アイテムボックスとCPUカートの色を変更する(ユーザー指示)
+  - ItemBoxRed.mat/CpuKartBlue.mat(URP/Lit)を新規作成し、アイテムボックスを赤色、CPUカートを青色に変更
+- [PR #125](https://github.com/rinngo0302/programming-lt-20260628/pull/125) feat(scene): ミニマップを実装する(ユーザー指示)
+  - MinimapCameraを追加。直交投影で上空からコース全体を見下ろし、画面右上に小さなビューポート(Camera.rect)で重ねて表示
+  - PlayerKartGreen.matを新規作成し、プレイヤーカートを緑色に変更(CPU青・アイテムボックス赤と合わせて色分け)
+  - docs/spec/04-camera.mdを更新し、「v1ではミニマップ等は含めない」の記述を削除してミニマップ仕様を追記
