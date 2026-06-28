@@ -12,6 +12,7 @@ public class PlayerInputAdapter : MonoBehaviour
     InputAction _steerAction;
     InputAction _accelerateAction;
     InputAction _brakeAction;
+    InputAction _useItemAction;
 
     void Awake()
     {
@@ -19,6 +20,7 @@ public class PlayerInputAdapter : MonoBehaviour
         _steerAction = playerMap.FindAction("Steer");
         _accelerateAction = playerMap.FindAction("Accelerate");
         _brakeAction = playerMap.FindAction("Brake");
+        _useItemAction = playerMap.FindAction("UseItem");
         playerMap.Enable();
     }
 
@@ -27,6 +29,11 @@ public class PlayerInputAdapter : MonoBehaviour
         _kartController.Steer = _steerAction.ReadValue<float>();
         _kartController.Accelerate = _accelerateAction.IsPressed();
         _kartController.Brake = _brakeAction.IsPressed();
+
+        if (_useItemAction.WasPressedThisFrame())
+        {
+            _kartController.UseItem();
+        }
     }
 
     void OnDestroy()

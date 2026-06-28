@@ -1,3 +1,4 @@
+using R3;
 using UnityEngine;
 
 public class KartController : MonoBehaviour
@@ -15,12 +16,17 @@ public class KartController : MonoBehaviour
     [SerializeField, Tooltip("旋回速度 (度/秒、最大ステアリング時)")]
     float _turnSpeedDegreesPerSecond = 90f;
 
+    [Header("アイテム")]
+    [SerializeField, Tooltip("みどり甲羅の弾プレハブ")]
+    GameObject _greenShellPrefab;
+
     KartModel _model;
 
     public float Steer { get; set; }
     public bool Accelerate { get; set; }
     public bool Brake { get; set; }
     public ItemHolder ItemHolder { get; } = new();
+    public ReadOnlyReactiveProperty<bool> IsStunned => _model.IsStunned;
 
     void Awake()
     {
@@ -39,5 +45,47 @@ public class KartController : MonoBehaviour
         _model.Tick(Steer, Accelerate, Brake, Time.deltaTime);
         transform.position = _model.Position;
         transform.rotation = Quaternion.Euler(0f, _model.Heading, 0f);
+    }
+
+    public void ApplyStun(float duration)
+    {
+        _model.ApplyStun(duration);
+    }
+
+    public void UseItem()
+    {
+        ItemData item = ItemHolder.ConsumeItem();
+        if (item == null)
+        {
+            return;
+        }
+
+        switch (item.Type)
+        {
+            case ItemType.Mushroom:
+                _model.ApplyBoost(item.MushroomBoostDuration, item.MushroomSpeedMultiplier);
+                break;
+            case ItemType.GreenShell:
+                FireGreenShell(item);
+                break;
+            case ItemType.Banana:
+                // バナナの設置トラップは#39で実装する。
+                break;
+        }
+    }
+
+    void FireGreenShell(ItemData item)
+    {
+        if (_greenShellPrefab == null)
+        {
+            return;
+        }
+
+        GameObject projectileGo = Instantiate(
+            _greenShellPrefab,
+            transform.position + transform.forward,
+            transform.rotation
+        );
+        projectileGo.GetComponent<GreenShellProjectile>().Launch(this, item);
     }
 }
