@@ -93,3 +93,10 @@
   - 発見: CLAUDE.mdのOutput structサンプルが使う`init`アクセサは、このUnity環境では`IsExternalInit`未定義でコンパイルエラーになるため`set`に変更した(別タスクでCLAUDE.md修正を予定)
 - [PR #91](https://github.com/rinngo0302/programming-lt-20260628/pull/91) feat(race): チェックポイント通過判定を実装する([#31](https://github.com/rinngo0302/programming-lt-20260628/issues/31))
   - RaceModel.NotifyCheckpointPassedを実装。通過済み番号+1のみ有効とし、ショートカットによる不正なラップ加算を防ぐ。最終チェックポイント通過でラップ+1
+- [PR #92](https://github.com/rinngo0302/programming-lt-20260628/pull/92) docs: CHANGELOGにPR #89/#90/#91を追記
+- [PR #93](https://github.com/rinngo0302/programming-lt-20260628/pull/93) feat(race): 順位計算ロジックを実装する([#32](https://github.com/rinngo0302/programming-lt-20260628/issues/32))
+  - RaceModel.RecalculateRanksを実装。ゴール済み(早い順)→ラップ数→直近チェックポイント番号→次チェックポイントまでの距離、の優先順位で順位を算出
+- [PR #94](https://github.com/rinngo0302/programming-lt-20260628/pull/94) feat(race): レース終了判定を実装する([#33](https://github.com/rinngo0302/programming-lt-20260628/issues/33))
+  - プレイヤーが指定ラップ数に到達してゴールラインを通過した時点でRaceEndedイベントを発火
+  - IsRaceEndedフラグでNotifyCheckpointPassed/RecalculateRanksをガードし、未ゴールCPUの順位をその時点の暫定値で確定させる
+  - scope親 [#7 race](https://github.com/rinngo0302/programming-lt-20260628/issues/7) は#34(asmdef問題で保留中、#27と同様の理由)が残っているため未クローズ
