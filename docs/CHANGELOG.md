@@ -123,3 +123,12 @@
   - BananaTrapを実装。使用者の後方に設置、設置者以外が踏むとスタン付与、一定時間で自然消滅
   - KartController.UseItem()のBananaケースを配線
   - scope親 [#8 item](https://github.com/rinngo0302/programming-lt-20260628/issues/8) は#41(asmdef問題で保留中、#27/#34と同様の理由)が残っているため未クローズ
+- [PR #107](https://github.com/rinngo0302/programming-lt-20260628/pull/107) docs: CHANGELOGにPR #105/#106を追記
+- [PR #108](https://github.com/rinngo0302/programming-lt-20260628/pull/108) feat(cpu): CpuDriverModelを実装する([#42](https://github.com/rinngo0302/programming-lt-20260628/issues/42))
+  - 現在のウェイポイントへの方向にステアリング値を計算する純粋なC#クラス。十分近づくと次のウェイポイントへ切り替える
+- [PR #109](https://github.com/rinngo0302/programming-lt-20260628/pull/109) feat(cpu): CPU用入力アダプタを実装する([#43](https://github.com/rinngo0302/programming-lt-20260628/issues/43))
+  - CpuInputAdapterを実装。CpuDriverModelの出力をKartControllerに接続し、常時加速する
+  - 発見: TestCourseData.assetのwaypointsが未設定(空配列)だったため、チェックポイントと同じ座標を設定
+- [PR #110](https://github.com/rinngo0302/programming-lt-20260628/pull/110) feat(cpu): アイテムランダム使用ロジックを実装する([#44](https://github.com/rinngo0302/programming-lt-20260628/issues/44))
+  - CpuInputAdapterにItemHolder.HeldItemの変化を購読し、取得後0.5〜2秒のランダム遅延後にUseItem()を呼ぶ処理を追加
+  - scope親 [#9 cpu](https://github.com/rinngo0302/programming-lt-20260628/issues/9) は#45(asmdef問題で保留中、#27/#34/#41と同様の理由)が残っているため未クローズ
